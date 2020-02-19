@@ -16,8 +16,8 @@ spec:
       labels: *Labels
     spec:
       serviceAccountName: grafana
-      # Configure an init container that will `chmod 777` Grafana's data directory 
-      # and volume before the main Grafana container starts up. 
+      # Configure an init container that will `chmod 777` Grafana's data directory
+      # and volume before the main Grafana container starts up.
       # To learn more about init containers, consult https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
       # from the official Kubernetes docs.
       initContainers:
@@ -30,7 +30,7 @@ spec:
               mountPath: "/var/lib/grafana"
       containers:
         - name: grafana
-          # The main Grafana container, which uses the `grafana/grafana:6.0.1` image 
+          # The main Grafana container, which uses the `grafana/grafana:6.0.1` image
           # from https://hub.docker.com/r/grafana/grafana
           image: grafana/grafana:6.0.1
           imagePullPolicy: Always
@@ -54,7 +54,7 @@ spec:
             - name: grafana
               containerPort: 3000
               protocol: TCP
-          # Set the `GF_SECURITY_ADMIN_USER` and `GF_SECURITY_ADMIN_PASSWORD` environment variables 
+          # Set the `GF_SECURITY_ADMIN_USER` and `GF_SECURITY_ADMIN_PASSWORD` environment variables
           # using the Secret defined in `grafana-secret.yaml`
           env:
             - name: GF_SECURITY_ADMIN_USER
@@ -67,8 +67,8 @@ spec:
                 secretKeyRef:
                   name: $APP_INSTANCE_NAME-grafana
                   key: admin-password
-          # Define a liveness and readiness probe that will hit `/api/health` using port `3000`. 
-          # To learn more about Liveness and Readiness Probes, 
+          # Define a liveness and readiness probe that will hit `/api/health` using port `3000`.
+          # To learn more about Liveness and Readiness Probes,
           # consult https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
           # from the official Kubernetes docs.
           livenessProbe:
@@ -91,7 +91,7 @@ spec:
             requests:
               cpu: 50m
               memory: 100Mi
-      # Define `configMap` volumes for the above ConfigMap files, and `volumeClaimTemplates` 
+      # Define `configMap` volumes for the above ConfigMap files, and `volumeClaimTemplates`
       # for Grafana's `2Gi` Block Storage data volume, which will be mounted to `/var/lib/grafana`.
       volumes:
         - name: config
@@ -110,7 +110,7 @@ spec:
   - metadata:
       name: $APP_INSTANCE_NAME-grafana-data
     spec:
-      storageClassName: do-block-storage
+      storageClassName: standard
       accessModes:
         - ReadWriteOnce
       resources:

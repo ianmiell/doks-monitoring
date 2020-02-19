@@ -1,3 +1,8 @@
+# MY LOCAL CHANGES
+
+- this should work on GKE
+- storage
+
 # DigitalOcean Kubernetes Cluster Monitoring Quickstart
 
 This repository accompanies the [How to Set Up a Prometheus, Grafana and Alertmanager Monitoring Stack on DigitalOcean Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-prometheus-grafana-and-alertmanager-monitoring-stack-on-digitalocean-kubernetes) Community tutorial. To learn more about the stack components, their Kubernetes manifests, and how to configure them, consult the accompanying tutorial.
@@ -14,7 +19,7 @@ The DigitalOcean Kubernetes Cluster Monitoring Quickstart repository contains Ku
 
 ## Deploying the Monitoring Stack
 
-Before you begin, you'll need the following tools installed in your local development environment: 
+Before you begin, you'll need the following tools installed in your local development environment:
 
 - The `kubectl` command-line interface installed on your local machine and configured to connect to your cluster. You can read more about installing and configuring `kubectl` [in its official documentation](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 - The [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) version control system installed on your local machine. To learn how to install git on Ubuntu 18.04, consult [How To Install Git on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04)
@@ -32,7 +37,7 @@ Next, move into the cloned repository:
 cd doks-monitoring
 ```
 
-Set the `APP_INSTANCE_NAME` and `NAMESPACE` environment variables, which will be used to configure a unique name for the stack's components and configure the Namespace into which the stack will be deployed: 
+Set the `APP_INSTANCE_NAME` and `NAMESPACE` environment variables, which will be used to configure a unique name for the stack's components and configure the Namespace into which the stack will be deployed:
 
 ```shell
 export APP_INSTANCE_NAME=sammy-cluster-monitoring
@@ -71,7 +76,7 @@ You can use `kubectl get all` to monitor deployment status.
 
 ## Viewing the Grafana Dashboards
 
-Once the stack is up and running, you can access Grafana by either patching the Grafana ClusterIP Service to create a DigitalOcean Load Balancer, or by forwarding a local port. 
+Once the stack is up and running, you can access Grafana by either patching the Grafana ClusterIP Service to create a DigitalOcean Load Balancer, or by forwarding a local port.
 
 ### Exposing the Grafana Service using a Load Balancer
 

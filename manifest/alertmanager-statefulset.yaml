@@ -7,11 +7,11 @@ metadata:
     app.kubernetes.io/name: $APP_INSTANCE_NAME
     app.kubernetes.io/component: alertmanager
 spec:
-  # Used to configure a stable network identity for the StatefulSet Pods 
+  # Used to configure a stable network identity for the StatefulSet Pods
   # e.g. pod_name.$APP_INSTANCE_NAME-alertmanager-operated.$NAMESPACE.svc:6783
   serviceName: "$APP_INSTANCE_NAME-alertmanager-operated"
-  # To scale the number of Alertmanager replicas, you must add `—cluster.peer` addresses 
-  # for any additional Alertmanager Pods in the `args` section of the `containers` spec. 
+  # To scale the number of Alertmanager replicas, you must add `—cluster.peer` addresses
+  # for any additional Alertmanager Pods in the `args` section of the `containers` spec.
   replicas: 2
   podManagementPolicy: OrderedReady
   updateStrategy:
@@ -58,8 +58,8 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
           volumeMounts:
-            # The ConfigMap containing `alertmanager.yml` will be mounted to `/etc/config`, using a Kubernetes Volume. 
-            # To learn more about mounting ConfigMap data into a Volume, 
+            # The ConfigMap containing `alertmanager.yml` will be mounted to `/etc/config`, using a Kubernetes Volume.
+            # To learn more about mounting ConfigMap data into a Volume,
             # consult https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#populate-a-volume-with-data-stored-in-a-configmap
             - name: config-volume
               mountPath: /etc/config
@@ -67,8 +67,8 @@ spec:
               mountPath: "/data"
               subPath: ""
           resources:
-            # Resource limits of 50 MiB of memory and 10m of CPU. 
-            # To learn more about resource limits and requests, and how to tune them, 
+            # Resource limits of 50 MiB of memory and 10m of CPU.
+            # To learn more about resource limits and requests, and how to tune them,
             # consult https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container
             limits:
               cpu: 10m
@@ -80,7 +80,7 @@ spec:
         - name: config-volume
           configMap:
             name: $APP_INSTANCE_NAME-alertmanager-config
-      # Configures Pod anti-affinity so that Alertmanager Pods are assigned to different Nodes. 
+      # Configures Pod anti-affinity so that Alertmanager Pods are assigned to different Nodes.
       # To learn more about Pod affinity and anti-affinity, consult https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       affinity:
         podAntiAffinity:
@@ -92,14 +92,14 @@ spec:
                 values:
                 - alertmanager
             topologyKey: "kubernetes.io/hostname"
-  # Attach `2Gi` of DigitalOcean Block Storage to each Alertmanager Pod. 
+  # Attach `2Gi` of DigitalOcean Block Storage to each Alertmanager Pod.
   # This volume will be attached at the `/data` path and will be used to store Alertmanager data.
   # To learn more about `volumeClaimTemplate`, consult https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
   volumeClaimTemplates:
   - metadata:
       name: $APP_INSTANCE_NAME-alertmanager-data
     spec:
-      storageClassName: do-block-storage
+      storageClassName: standard
       accessModes:
         - ReadWriteOnce
       resources:

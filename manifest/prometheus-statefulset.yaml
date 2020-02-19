@@ -73,7 +73,7 @@ spec:
         - name: config-volume
           configMap:
             name: $APP_INSTANCE_NAME-prometheus-config
-      # Configures Pod anti-affinity so that Prometheus Pods are assigned to different Nodes. 
+      # Configures Pod anti-affinity so that Prometheus Pods are assigned to different Nodes.
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -90,7 +90,7 @@ spec:
       name: $APP_INSTANCE_NAME-prometheus-data
       labels: *Labels
     spec:
-      storageClassName: do-block-storage
+      storageClassName: standard
       accessModes:
         - ReadWriteOnce
       resources:
