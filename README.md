@@ -1,7 +1,8 @@
 # MY LOCAL CHANGES
 
 - this should work on GKE
-- storage
+- storage class updated
+- script added to wipe and restart (reset.sh)
 
 # DigitalOcean Kubernetes Cluster Monitoring Quickstart
 
