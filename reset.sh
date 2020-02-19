@@ -4,11 +4,14 @@ set -e
 set -u
 export APP_INSTANCE_NAME=monitoring
 export NAMESPACE=monitoring
+echo 'Input slack key (see https://jira.meirionconsulting.com/browse/IWT-6463)'
+read SLACK_KEY
+export SLACK_KEY=${SLACK_KEY}
 kubectl delete namespace "${NAMESPACE}" || true
 kubectl create namespace "${NAMESPACE}"
 kubens "${NAMESPACE}"
 export GRAFANA_GENERATED_PASSWORD="$(echo -n 'admin' | base64)"
-awk 'FNR==1 {print "---"}{print}' manifest/* | envsubst '$APP_INSTANCE_NAME $NAMESPACE $GRAFANA_GENERATED_PASSWORD' > "${APP_INSTANCE_NAME}_manifest.yaml"
+awk 'FNR==1 {print "---"}{print}' manifest/* | envsubst '$APP_INSTANCE_NAME $NAMESPACE $GRAFANA_GENERATED_PASSWORD $SLACK_KEY' > "${APP_INSTANCE_NAME}_manifest.yaml"
 kubectl apply -f "${APP_INSTANCE_NAME}_manifest.yaml" --namespace "${NAMESPACE}"
 until [[ $(kubectl get pods | grep -v NAME | grep -v 1/1 | grep -v 2/2 | wc -l | xargs) = '0' ]]
 do
@@ -18,4 +21,4 @@ do
 done
 kubectl port-forward --namespace ${NAMESPACE} ${APP_INSTANCE_NAME}-grafana-0 3000 &
 kubectl port-forward --namespace ${NAMESPACE} ${APP_INSTANCE_NAME}-prometheus-0 9090 &
-kubectl port-forward --namespace ${NAMESPACE} ${APP_INSTANCE_NAME}-prometheus-0 9090 &
+kubectl port-forward --namespace ${NAMESPACE} ${APP_INSTANCE_NAME}-alertmanager-0 9093

@@ -3,6 +3,8 @@
 - this should work on GKE
 - storage class updated
 - script added to wipe and restart (reset.sh)
+- built on this tutorial: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-kubernetes-monitoring-stack-with-prometheus-grafana-and-alertmanager-on-digitalocean
+- Pointed at my slack channel
 
 # DigitalOcean Kubernetes Cluster Monitoring Quickstart
 
